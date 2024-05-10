@@ -8,6 +8,7 @@ import topdraw from "../assets/GameLogos-07.png"
 import luckyfive from "../assets/GameLogos-09.png"
 import pickfour from "../assets/GameLogos-10.png"
 import hotpick from "../assets/GameLogos-11.png"
+import {useState} from "react";
 
 const allImages = [
     {game : cashpot, title: "Cashpot", description: "Generates 1 number between 1-36", url: "https://supremeventures.com/game-results/?action=cashpot&mode=how"},
@@ -22,14 +23,49 @@ const allImages = [
 
 ]
 
+
+
 export default function Card(){
+
+    const[updatedInput, setUpdatedInput] = useState(99);
+    const[result, setResults] = useState([''])
+
+    function handleNumberGenerate(index:number){
+
+        const generatedNumbers = []
+
+
+        if(index === 0){
+            for(let i = 0; i < 1; i++){
+                generatedNumbers.push(Math.floor( 1 + Math.random() * (37 - 1)).toString());
+            }
+            setResults(generatedNumbers);
+        }
+
+        if(index === 1){
+            for(let i = 0; i < 5; i++){
+                generatedNumbers.push(Math.floor( 1 + Math.random() * (37 - 1)).toString());
+            }
+
+            for(let i = 0; i < 1; i++){
+                generatedNumbers.push(Math.floor( 1 + Math.random() * (11 - 1)).toString());
+            }
+
+
+            setResults(generatedNumbers);
+        }
+
+
+        setUpdatedInput(index);
+
+    }
 
     return (
         <>
             <ul>
                 
                 {allImages.map((img, index) => (
-                    <li key={index}>
+                    <li key={index} onClick={() => handleNumberGenerate(index)}>
                         <motion.div
                             whileHover={{scale: 1.05}}
                             whileTap={{scale: 1.05}}
@@ -40,15 +76,15 @@ export default function Card(){
                             </div>
 
                             <div className="flex items-center justify-evenly w-full gap-5 p-5 text-center">
-                                <motion.a whileHover={{scale : 1.1}} whileTap={{scale : 1.1}} className="border bg-[#165259] transition-all ease-in-out duration-700 border-[#165259] hover:bg-[#1ea7ae] font-bold rounded-md w-full p-2" >
+                                <motion.a whileHover={{scale : 1.1}} whileTap={{scale : 1.1}} href={img.url} className="border bg-[#165259] transition-all ease-in-out duration-700 border-[#165259] hover:bg-[#1ea7ae] font-bold rounded-md w-full p-2" >
                                     How to play
                                 </motion.a>
                             </div>
 
-                            <div className=" w-full p-5">
+                            <div className=" w-full p-5" >
                                 <input
-                                    className={"shadow-[#0e7177] shadow-md p-2 w-full rounded-sm text-[#ccfbf7] text-center"}
-                                    disabled={true} type="text" placeholder="Tap to generate number"/>
+                                    className={" bg-[#165259] shadow-[#0e7177] tracking-widest shadow-md p-2 w-full rounded-sm text-[#ccfbf7] text-center"}
+                                    readOnly={true}  type="text" value={index === updatedInput ? result : "Tap to generate number"} placeholder="Tap to generate number"/>
                             </div>
                         </motion.div>
                     </li>
