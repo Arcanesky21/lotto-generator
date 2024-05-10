@@ -160,14 +160,15 @@ export default function Card() {
 
     return (
         <>
-            <ul>
+            <ul className="md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-4">
 
                 {allImages.map((img, index) => (
                     <li key={index} onClick={() => handleNumberGenerate(index)}>
                         <motion.div
+
                             whileHover={{scale: 1.05}}
                             whileTap={{scale: 1.05}}
-                            className="border rounded-lg p-5 mt-10 flex items-center flex-col border-gray-400">
+                            className="border rounded-lg h-[28rem] p-5 mt-10 flex items-center flex-col border-gray-400">
                             <img className="w-40" src={img.game} alt={img.title}/>
                             <div className="flex p-5 flex-col items-center text-center font-bold ">
                                 {img.description}
